@@ -22,6 +22,12 @@ const App = () => {
             setTotal(total - 1);
     }
 
+    const deleteItem = (item, countToSubtract) => {
+        let newArr = grammarArr.filter(grammar => grammar != item);
+        setGrammarArr(newArr);
+        setTotal(total - countToSubtract);
+    }
+
     const grammmarList = () => {
         return grammarArr.map(grammar => {
             return (
@@ -30,20 +36,22 @@ const App = () => {
                         name={grammar}
                         plusOne={plusOne}
                         minusOne={minusOne}
+                        deleteItem={deleteItem}
                     />
                 </div>
             );
         });
     }
 
-    const percentage = (total /20) * 100;
-    const trailColor = total => {
+    let percentage = (total /20) * 100;
+
+    let barColor = '';
         if (total === 20){
-            return '#1cfc03';
+            barColor = '#016936';
         } else {
-            return '#fcbe03';
+            barColor = '#FE9A76';
         }
-    }
+    
 
     return(
         <div className="ui container">
@@ -53,9 +61,10 @@ const App = () => {
             <div>{grammmarList()}</div>
 
             <div className="bar-container">
-                <CircularProgressbar value={percentage} text={total}
+                <CircularProgressbar value={percentage} text={total===0?'0':total}
                 styles={buildStyles({
-                    pathColor: trailColor
+                    pathColor: barColor,
+                    textColor: '#000'
                 })}/>
             </div>
 

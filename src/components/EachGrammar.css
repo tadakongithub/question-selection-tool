@@ -1,5 +1,11 @@
 .grammar-container{
-    margin: 5px auto;
+    margin: 5px auto 0;
+}
+
+.trash-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .title-button{
