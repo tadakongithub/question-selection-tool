@@ -1,0 +1,15 @@
+.grammar-container{
+    margin: 5px auto;
+}
+
+.title-button{
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+
+.button-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
