@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from './Form';
 import EachGrammar from './EachGrammar';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -23,20 +23,28 @@ const App = () => {
     }
 
     const deleteItem = (item, countToSubtract) => {
-        let newArr = grammarArr.filter(grammar => grammar != item);
+        let newArr = grammarArr.filter(grammar => grammar !== item);
         setGrammarArr(newArr);
         setTotal(total - countToSubtract);
     }
 
+    const handleGrammarEditing = (newGrammar, index) => {
+        let newArr = [...grammarArr];
+        newArr.splice(index, 1, newGrammar);
+        setGrammarArr(newArr);
+    }
+
     const grammmarList = () => {
-        return grammarArr.map(grammar => {
+        return grammarArr.map((grammar, index) => {
             return (
-                <div>
+                <div key={index}>
                     <EachGrammar 
-                        name={grammar}
+                        grammar={grammar}
                         plusOne={plusOne}
                         minusOne={minusOne}
                         deleteItem={deleteItem}
+                        index={index}
+                        handleGrammarEditing={handleGrammarEditing}
                     />
                 </div>
             );
@@ -51,6 +59,11 @@ const App = () => {
         } else {
             barColor = '#FE9A76';
         }
+
+        useEffect(()=>{
+            console.log(grammarArr);
+            grammmarList();
+        })
     
 
     return(

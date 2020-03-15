@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Progress } from 'semantic-ui-react';
 import './EachGrammar.css';
+import Editable from './Editable';
 
 const EachGrammar = (props) => {
 
     const [count, setCount] = useState(0);
+    const inputRef = useRef();
 
     const plusOne = (e) => {
         if(count < 20){
@@ -21,14 +23,21 @@ const EachGrammar = (props) => {
     }
 
     const deleteItem = () => {
-        props.deleteItem(props.name, count);
+        props.deleteItem(props.grammar, count);
     }
+
+    const handleGrammarEditing = (e) => {
+        props.handleGrammarEditing(e.target.value, props.index);
+    }
+
 
     return(
         <div className="grammar-container">
             
                 <div className="title-button">
-                    <div>{props.name}</div>
+                    <Editable grammar={props.grammar} childRef={inputRef}>
+                        <input type="text" value={props.grammar} onChange={handleGrammarEditing} ref={inputRef}/>
+                    </Editable>
                     <div className="button-container">
                         <i className="big plus square icon green" onClick={plusOne}></i>
                         <i className="big minus square icon orange" onClick={minusOne}></i>
