@@ -11,26 +11,40 @@ const App = () => {
     const [grammarArr, setGrammarArr] = useState([]);
 
     const addNewGrammar = (newGrammar) => {
-        setGrammarArr([...grammarArr, newGrammar]);
+        setGrammarArr([...grammarArr, {grammar: newGrammar, count: 0}]);
     }
 
-    const plusOne = () => {
-            setTotal(total + 1);
+    const plusOne = (index) => {
+        //change count of the target grammar
+        let arr = [...grammarArr];
+        arr[index].count ++;
+        setGrammarArr(arr);
+
+        //change total of all grammars
+        setTotal(total + 1);
     }
 
-    const minusOne = () => {
-            setTotal(total - 1);
+    const minusOne = (index) => {
+        //change count of the target grammar
+        let arr = [...grammarArr];
+        arr[index].count --;
+        setGrammarArr(arr);
+
+        //change total of all grammars
+        setTotal(total - 1);
     }
 
-    const deleteItem = (item, countToSubtract) => {
-        let newArr = grammarArr.filter(grammar => grammar !== item);
-        setGrammarArr(newArr);
-        setTotal(total - countToSubtract);
+    const deleteItem = (indexToDelete) => {
+        let countToDelete = grammarArr[indexToDelete].count;
+        setTotal(total - countToDelete);
+
+        let arr = grammarArr.filter((grammar, index) => index !== indexToDelete);
+        setGrammarArr(arr);
     }
 
     const handleGrammarEditing = (newGrammar, index) => {
         let newArr = [...grammarArr];
-        newArr.splice(index, 1, newGrammar);
+        newArr[index].grammar = newGrammar;
         setGrammarArr(newArr);
     }
 
