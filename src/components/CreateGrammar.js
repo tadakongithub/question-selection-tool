@@ -15,14 +15,16 @@ const Form = (props) => {
     }
 
     return (
-        <div>
-            <form className="ui form" onSubmit={handleSubmit}>
-                <div className="field">
+            <form className="ui form grid" onSubmit={handleSubmit}>
+                <div className="field thirteen wide column">
                     <input value={grammar} type="text" 
                     onChange={handleChange} placeholder="enter grammar point"/>
                 </div>
+
+                <div className="three wide column">
+                    <button type="submit" className="ui teal button right floated">Add</button>
+                </div>
             </form>
-        </div>
     )
 }
 

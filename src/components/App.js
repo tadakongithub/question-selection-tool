@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Form from './Form';
+import Form from './CreateGrammar';
 import EachGrammar from './EachGrammar';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import './App.css';
+import Total from './Total';
 
 const App = () => {
+
+    const [numberOfQuestionsToMake, setNumberOfQuestions] = useState(20);
 
     const [total, setTotal] = useState(0);
     const [grammarArr, setGrammarArr] = useState([]);
@@ -48,6 +51,10 @@ const App = () => {
         setGrammarArr(newArr);
     }
 
+    const setHowManyQuestions = (numberOfQuestionsToMake) => {
+        setNumberOfQuestions(numberOfQuestionsToMake);
+    }
+
     const grammmarList = () => {
         return grammarArr.map((grammar, index) => {
             return (
@@ -65,10 +72,10 @@ const App = () => {
         });
     }
 
-    let percentage = (total /20) * 100;
+    let percentage = (total /numberOfQuestionsToMake) * 100;
 
     let barColor = '';
-        if (total === 20){
+        if (total === numberOfQuestionsToMake){
             barColor = '#016936';
         } else {
             barColor = '#FE9A76';
@@ -83,12 +90,14 @@ const App = () => {
     return(
         <div className="ui container">
 
+            <Total setHowManyQuestions={setHowManyQuestions}/>
+
             <Form addNewGrammar={addNewGrammar}/>
 
             <div>{grammmarList()}</div>
 
             <div className="bar-container">
-                <CircularProgressbar value={percentage} text={total===0?'0':total}
+                <CircularProgressbar value={percentage} text={total===0?'0/'+numberOfQuestionsToMake:total+'/'+numberOfQuestionsToMake}
                 styles={buildStyles({
                     pathColor: barColor,
                     textColor: '#000'
